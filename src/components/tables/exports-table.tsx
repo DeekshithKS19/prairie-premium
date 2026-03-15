@@ -15,6 +15,7 @@ import type { ExportRecord, UserRole } from "@/lib/supabase/types";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import * as XLSX from "xlsx";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client"; // ⬅️ add this
 
 interface Props {
   data: ExportRecord[];

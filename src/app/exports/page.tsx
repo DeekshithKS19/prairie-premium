@@ -9,13 +9,12 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default async function ExportsPage() {
   const currentUser = await requireApprovedUser();
-  const supabase = createSupabaseServerClient();
-
+  // ⬇⬇ IMPORTANT: await here
+  const supabase = await createSupabaseServerClient();
   const { data: exports, error } = await supabase
     .from("exports")
     .select("*")
     .order("created_at", { ascending: false });
-
   if (error || !exports) {
     return <p className="text-red-400">Failed to load exports.</p>;
   }

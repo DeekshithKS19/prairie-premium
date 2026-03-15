@@ -1,4 +1,3 @@
-// src/app/exports/[id]/edit/page.tsx
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { requireApprovedUser } from "@/lib/utils/auth-helpers";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,18 +6,17 @@ import { ExportForm } from "@/components/forms/export-form";
 export default async function EditExportPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  await requireApprovedUser();
-  const supabase = createSupabaseServerClient();
-
+  const { id } = await params;                      // ⬅️ await params
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from("exports")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", id)                                   // ⬅️ use resolved id
     .single();
-
   if (error || !data) {
+    console.error("Edit export load error:", error);
     return <p className="text-red-400">Export not found.</p>;
   }
 
