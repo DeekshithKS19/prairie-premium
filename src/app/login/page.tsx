@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { ensureUserProfile } from "./actions";
@@ -17,20 +17,22 @@ const schema = z.object({
 });
 type FormValues = z.infer<typeof schema>;
 
-export default function LoginPage() {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams?: { unapproved?: string };
+}) {
   const router = useRouter();
-  const search = useSearchParams();
   const supabase = createSupabaseBrowserClient();
-
-  const form = useForm<FormValues>({ resolver: zodResolver(schema) });
-
+  const form = useForm<FormValues>({ resolver: zodResolver(schema) as any });
+  const isUnapproved = searchParams?.unapproved === "1";
   useEffect(() => {
-    if (search.get("unapproved") === "1") {
+    if (isUnapproved) {
       toast.error(
         "Your account is awaiting admin approval. Please contact your administrator."
       );
     }
-  }, [search]);
+  }, [isUnapproved]);
 
   const onSubmit = async (values: FormValues) => {
     const { data, error } = await supabase.auth.signInWithPassword({

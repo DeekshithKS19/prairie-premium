@@ -51,19 +51,27 @@ export function ExportForm({ initial }: { initial?: ExportRecord }) {
   const router = useRouter();
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: initial
-      ? {
-          ...initial,
-          production_complete_date:
-            initial.production_complete_date ?? undefined,
-          expected_ship_date: initial.expected_ship_date ?? undefined,
-          actual_ship_date: initial.actual_ship_date ?? undefined,
-        }
-      : {
-          status: "Planning",
-          shipment_type: "Ocean Container",
-        },
+    resolver: zodResolver(schema) as any,
+    defaultValues: (initial
+    ? {
+        ...initial,
+        // normalize dates from DB
+        production_complete_date: initial.production_complete_date ?? undefined,
+        expected_ship_date: initial.expected_ship_date ?? undefined,
+        actual_ship_date: initial.actual_ship_date ?? undefined,
+        // normalize nullable text fields
+        po_number: initial.po_number ?? undefined,
+        work_order: initial.work_order ?? undefined,
+        container_number: initial.container_number ?? undefined,
+        carrier: initial.carrier ?? undefined,
+        bill_of_lading: initial.bill_of_lading ?? undefined,
+        export_reference: initial.export_reference ?? undefined,
+        remarks: initial.remarks ?? undefined,
+      }
+    : {
+        status: "Planning",
+        shipment_type: "Ocean Container",
+      }) as any,
   });
 
   const onSubmit = async (values: FormValues) => {
