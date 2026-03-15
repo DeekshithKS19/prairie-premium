@@ -178,8 +178,7 @@ export function ExportForm({ initial }: { initial?: ExportRecord }) {
             <option>Delayed</option>
           </select>
         </Field>
-      </div>
-      <Field label="Carrier" error={form.formState.errors.carrier}>
+        <Field label="Carrier" error={form.formState.errors.carrier}>
           <input
             className="w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm"
             {...form.register("carrier")}
@@ -194,6 +193,8 @@ export function ExportForm({ initial }: { initial?: ExportRecord }) {
             {...form.register("bill_of_lading")}
           />
         </Field>
+      </div>
+      
 
       {/* Right column */}
       <div className="space-y-3">
