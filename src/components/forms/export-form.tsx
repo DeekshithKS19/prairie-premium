@@ -179,6 +179,21 @@ export function ExportForm({ initial }: { initial?: ExportRecord }) {
           </select>
         </Field>
       </div>
+      <Field label="Carrier" error={form.formState.errors.carrier}>
+          <input
+            className="w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm"
+            {...form.register("carrier")}
+          />
+        </Field>
+        <Field
+          label="Bill of Lading"
+          error={form.formState.errors.bill_of_lading}
+        >
+          <input
+            className="w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm"
+            {...form.register("bill_of_lading")}
+          />
+        </Field>
 
       {/* Right column */}
       <div className="space-y-3">
@@ -247,21 +262,7 @@ export function ExportForm({ initial }: { initial?: ExportRecord }) {
             {...form.register("container_number")}
           />
         </Field>
-        <Field label="Carrier" error={form.formState.errors.carrier}>
-          <input
-            className="w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm"
-            {...form.register("carrier")}
-          />
-        </Field>
-        <Field
-          label="Bill of Lading"
-          error={form.formState.errors.bill_of_lading}
-        >
-          <input
-            className="w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm"
-            {...form.register("bill_of_lading")}
-          />
-        </Field>
+       
         <Field
           label="Export Reference"
           error={form.formState.errors.export_reference}
