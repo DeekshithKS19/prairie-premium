@@ -64,7 +64,7 @@ export function ExportsTable({ data, currentRole }: Props) {
           const record = row.original;
           return (
             <div className="flex justify-end gap-2">
-              {(currentRole === "admin" || currentRole === "manager") && (
+              {(currentRole === "admin" || currentRole === "manager" || currentRole === "user") && (
                 <Button
                   size="xs"
                   variant="outline"
@@ -75,7 +75,7 @@ export function ExportsTable({ data, currentRole }: Props) {
                   Edit
                 </Button>
               )}
-              {currentRole === "admin" && (
+              {currentRole === "admin" || currentRole === "manager" || currentRole === "user" && (
                 <DeleteButton id={record.id} />
               )}
             </div>
